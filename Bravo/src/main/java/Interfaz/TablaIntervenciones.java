@@ -5,7 +5,7 @@
  */
 package Interfaz;
 
-import bravo.Intervencion.Intervencion;
+import Intervencion.Intervencion;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
