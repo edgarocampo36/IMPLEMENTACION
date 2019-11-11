@@ -18,9 +18,9 @@ public class Dotacion {
     private float kmUnidadAlVolver;
     private UnidadMovil unidadMovil;
 
-    public Dotacion(Date fechaHoraSalida, float kmUnidadAlSalir, UnidadMovil unidadMovil) {
+    public Dotacion(Date fechaHoraSalida, UnidadMovil unidadMovil) {
         this.fechaHoraSalida = fechaHoraSalida;
-        this.kmUnidadAlSalir = kmUnidadAlSalir;
+        this.kmUnidadAlSalir = unidadMovil.getKilometraje();
         this.unidadMovil = unidadMovil;
     }
 

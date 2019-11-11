@@ -36,9 +36,13 @@ public class Ventana extends JFrame{
         Usuario usuarioActual = new Usuario(contrasenia, fechaActual, user);
         Sesion sesionActual = new Sesion(fechaActual, usuarioActual);
         
+        //Se cargan las intervenciones en memoria
+        GeneradorBase generador = new GeneradorBase();
+        ArrayList<Intervencion> intervenciones = generador.getIntervenciones();
+        
         GestorFinalizarIntervencion gestor = new GestorFinalizarIntervencion(sesionActual, usuarioActual);
-        ArrayList<Intervencion> intervenciones = new ArrayList<>();
-        TablaIntervenciones t1 = new TablaIntervenciones(intervenciones);
+        
+        //TablaIntervenciones t1 = new TablaIntervenciones(intervenciones);
         
     }
     

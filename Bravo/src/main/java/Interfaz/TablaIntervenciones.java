@@ -37,7 +37,7 @@ public class TablaIntervenciones extends JFrame {
         tabla = new JTable(modelo);
         JScrollPane scroll = new JScrollPane(tabla);
         tabla.setBounds(12, 22, 500, 500);
-        setSize(600, 300);
+        setSize(800, 600);
         scroll.setBounds(12, 22, 500, 500);
 
         add(scroll);

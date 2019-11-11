@@ -21,7 +21,7 @@ public class Intervencion {
     private String resumenSiniestroInformante;
     private ArrayList<Dotacion> dotacion = new ArrayList<>(); 
     private ArrayList<HistorialIntervencion> historial = new ArrayList<>();
-    private ArrayList<Bombero> encargado = new ArrayList<>();
+    private Bombero encargado;
     private Estado estado;
 
     public Intervencion(String domicilioReportado, String resumenSiniestroInformante, Estado estado) {
@@ -29,6 +29,9 @@ public class Intervencion {
         this.resumenSiniestroInformante = resumenSiniestroInformante;
         this.estado = estado;
     }
+
+
+    
 
     public void setDomicilioReportado(String domicilioReportado) {
         this.domicilioReportado = domicilioReportado;
@@ -54,7 +57,7 @@ public class Intervencion {
         return historial;
     }
 
-    public ArrayList<Bombero> getEncargado() {
+    public Bombero getEncargado() {
         return encargado;
     }
 
@@ -66,7 +69,7 @@ public class Intervencion {
         this.historial = historial;
     }
 
-    public void setEncargado(ArrayList<Bombero> encargado) {
+    public void setEncargado(Bombero encargado) {
         this.encargado = encargado;
     }
 

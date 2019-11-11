@@ -86,33 +86,21 @@ public class GestorFinalizarIntervencion {
         int n = intervencionSeleccionada.getDotacion().size();
         fechaHoraLlegada = new Date[n];
         kilometrajeLlegada = new float[n];
+        ConversorFecha conversor = new ConversorFecha();
         for (int i=0; i<n; i++){
-            fechaHoraLlegada[i] = parseFecha(fechaHora[i]);
+            fechaHoraLlegada[i] = conversor.stringADate(fechaHora[i]);
             kilometrajeLlegada[i] = Float.valueOf(kilometraje[i]);
             ArrayList<Dotacion> dotaciones = intervencionSeleccionada.getDotacion();
             Dotacion dot = dotaciones.get(i);
-            //dot.tomarFechaHoraLlegadaYKilometraje(fechaHoraLlegada,kilometrajeLlegada); REVISAR
-            if(validarKilometrajeUnidad(dot, kilometrajeLlegada[i])){
+            if(validarKilometrajeUnidad(dot, kilometrajeLlegada[i])){ //completar si ingresa mal datos
                 if(validarFechaHoraLlegada(dot, fechaHoraLlegada[i])){
-                    continue;
                 }
             }
         }
         return true;
     }
     
-    public static Date parseFecha(String fecha){
-        SimpleDateFormat formato = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy");
-        Date fechaDate = null;
-        try {
-            fechaDate = formato.parse(fecha);
-        } 
-        catch (ParseException ex) 
-        {
-            System.out.println(ex);
-        }
-        return fechaDate;
-    }
+    
     
     //metodo 32
     public boolean validarKilometrajeUnidad(Dotacion dotacion, float kilometraje){
@@ -133,16 +121,8 @@ public class GestorFinalizarIntervencion {
     //metodo 37
     public Date getFechaHoraActual(){
         Date fechaActual = new Date(); //obtiene la fecha actual
-        SimpleDateFormat formato = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy"); //Formateador de fecha
-        String fechaString = formato.format(fechaActual); //formatea la fecha actual y devuelve un string
-        try {
-            fechaActual = formato.parse(fechaString); //convierte la fecha en string a un Date
-        } 
-        catch (ParseException ex) 
-        {
-            System.out.println(ex);
-        }
-        return fechaActual;
+        ConversorFecha conversor = new ConversorFecha();
+        return conversor.formatoDate(fechaActual);
     }
     
     //metodo 39
