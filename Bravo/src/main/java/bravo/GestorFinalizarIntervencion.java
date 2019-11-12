@@ -28,8 +28,12 @@ public class GestorFinalizarIntervencion {
     
     //metodo 3
     public ArrayList<Intervencion> opcionFinalizarIntervencion(Sesion sesion, Usuario usuario, ArrayList<Intervencion> intervenciones){
-        if(validarUsuarioLogueado()){
+        //metodo 4
+        if(validarUsuarioLogueado(sesion, usuario)){
+            //metodo 9
             ArrayList<Intervencion> intervencionesEnCurso = buscarIntervencionesEnCurso(intervenciones);
+
+            //metodo 17
             ArrayList<Intervencion> intervencionesOrdenadas = ordenarIntervencionesXFecha(intervencionesEnCurso);
             return intervencionesOrdenadas;
         }
@@ -37,18 +41,19 @@ public class GestorFinalizarIntervencion {
     }
     
     //metodo 4
-    public boolean validarUsuarioLogueado(){
-        return sesionActual.getUsuarioLogueado(usuarioLogueado);
+    public boolean validarUsuarioLogueado(Sesion sesion, Usuario usuario){
+        return sesion.getUsuarioLogueado(usuario);
     }
     
     //metodo 9
     public ArrayList<Intervencion> buscarIntervencionesEnCurso(ArrayList<Intervencion> intervenciones){
         ArrayList<Intervencion> intervencionesEnCurso = new ArrayList<>();
         for (Intervencion i : intervenciones){
+            //metodo 10
             if(i.estaEnCurso()){
                 intervencionesEnCurso.add(i);
             } 
-        } 
+        }
         return intervencionesEnCurso;
     }
     

@@ -16,10 +16,12 @@ public class Bombero {
     private Usuario usuario;
     private Rol rol;
 
-    public Bombero(boolean activo, String nombre, String apellido) {
+    public Bombero(boolean activo, String nombre, String apellido, Usuario usuario, Rol rol) {
         this.activo = activo;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.usuario = usuario;
+        this.rol = rol;
     }
 
     public boolean isActivo() {
@@ -38,6 +40,7 @@ public class Bombero {
         return usuario;
     }
 
+    //metodo 7
     public boolean getRol() {
         return rol.esEncargadoDeGuardia();
     }

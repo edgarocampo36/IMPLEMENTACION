@@ -45,7 +45,7 @@ public class TablaIntervenciones {
     public void armarTabla(DefaultTableModel modelo, ArrayList<Intervencion> intervenciones) {
         int n = 1;
         for (Intervencion i : intervenciones) {
-            Object[] f = {"" + n + "", "" + i.getFechaHoraSolicitud() + "", i.getDomicilioReportado(), i.getResumenSiniestroInformante()};
+            String[] f = {"" + n + "", "" + i.getFechaHoraSolicitud() + "", i.getDomicilioReportado(), i.getResumenSiniestroInformante()};
             modelo.addRow(f);
             n++;
         }

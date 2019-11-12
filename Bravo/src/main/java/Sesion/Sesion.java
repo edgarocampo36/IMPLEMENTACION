@@ -45,6 +45,7 @@ public class Sesion {
         this.usuario = usuario;
     }
 
+    //metodo 5
     public boolean getUsuarioLogueado(Usuario usuario) {
        return usuario.getBombero();
     }

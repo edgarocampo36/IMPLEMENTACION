@@ -85,7 +85,8 @@ public class Intervencion {
     public void agregarHistorialIntervencion(HistorialIntervencion nuevoHistorial){
         this.historial.add(nuevoHistorial);
     }
-    
+
+    //metodo 10
     public boolean estaEnCurso(){
         return estado.estaEnCurso();
     }
@@ -95,7 +96,7 @@ public class Intervencion {
         return estado.esNueva();
     }
     
-    //
+    //metodo 14
     public Date getFechaHoraSolicitud(){
         Date fechaCreacion = new Date();
         for(HistorialIntervencion h : historial){

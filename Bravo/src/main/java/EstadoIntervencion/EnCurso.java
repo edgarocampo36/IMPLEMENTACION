@@ -16,11 +16,16 @@ import java.util.Date;
 public class EnCurso extends Estado{
 
     public EnCurso() {
-        super.setNombre("En Curso");
+        super.setNombre("En curso");
         super.setAmbito("Intervencion");
         super.setDescripcion("La intervencion se encuentra en curso");
     }
-    
+
+    //metodo 11
+    @Override
+    public boolean estaEnCurso(){
+        return true;
+    }
     
     @Override
     public void finalizar(Date fechaHoraActual, Date fechaHoraLlegada[], float kilometrajeLlegada[], Intervencion intervencion){

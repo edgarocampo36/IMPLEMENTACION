@@ -53,13 +53,26 @@ public abstract class Estado {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
+    public String getAmbito() {
+        return ambito;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    //metodo 11
     public boolean estaEnCurso(){
-        return "En curso".equals(nombre);
+        return false;
     }
     
     public boolean esNueva(){
-        return "Nueva".equals(nombre);
+        return false;
     }
 
     public void finalizar(Date fechaActual, Date[] fechaHoraLlegada, float[] kilometrajeLlegada, Intervencion aThis) {

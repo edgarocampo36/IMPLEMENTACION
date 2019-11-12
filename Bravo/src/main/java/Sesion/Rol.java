@@ -23,7 +23,8 @@ public class Rol {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
+    //metodo 8
     public boolean esEncargadoDeGuardia(){
         return "Encargado de guardia".equals(nombre);     
     }

@@ -16,6 +16,10 @@ public class Nueva extends Estado{
         super.setAmbito("Intervencion");
         super.setDescripcion("La intervencion se encuentra creada");
     }
-    
+
+    @Override
+    public boolean esNueva(){
+        return true;
+    }
     
 }

@@ -48,10 +48,15 @@ public class Usuario {
         this.nombre = nombre;
     }
 
+    //metodo 6
     public boolean getBombero() {
         return bombero.getRol();
     }
-    
+
+    public void setBombero(Bombero bombero) {
+        this.bombero = bombero;
+    }
+
     public boolean validarNombre(String nom){
         return nom.equals(nombre);
     }

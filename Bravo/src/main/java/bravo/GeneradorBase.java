@@ -13,7 +13,8 @@ import EstadoIntervencion.Nueva;
 import Intervencion.Dotacion;
 import Intervencion.Intervencion;
 import Intervencion.UnidadMovil;
-import Sesion.Bombero;
+import Sesion.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,7 +32,9 @@ public class GeneradorBase {
     private ArrayList<Intervencion> intervenciones = new ArrayList<>();
     private ArrayList<Dotacion> dotaciones = new ArrayList<>();
     private ArrayList<UnidadMovil> unidadesMoviles = new ArrayList<>();
-    private ArrayList<HistorialIntervencion> historial = new ArrayList<>(); 
+    private ArrayList<Bombero> encargados = new ArrayList<>();
+    private Usuario usuarioActual;
+
     
     
     public GeneradorBase(){
@@ -39,31 +42,70 @@ public class GeneradorBase {
     }
     
     public void generarIntervenciones(){
-        Date fechaHora = new Date();
+        Date fechaHora1, fechaHora2, fechaHora3;
         ConversorFecha conversor = new ConversorFecha();
-        fechaHora = conversor.formatoDate(fechaHora);
-        
+        fechaHora1 = conversor.stringADate("10:00:00 11/10/2019");
+        fechaHora2 = conversor.stringADate("09:00:00 08/11/2019");
+        fechaHora3 = conversor.stringADate("11:00:00 10/10/2019");
+
+        //creacion estados de historiales
         Estado estadoNueva = new Nueva();
         Estado estadoConvocada = new Convocada();
         Estado estadoEnCurso = new EnCurso();
         
         Date fechaHoraHasta = new Date();
-        fechaHoraHasta = conversor.formatoDate(fechaHora);
-        
-        HistorialIntervencion historialNueva = new HistorialIntervencion(fechaHora, estadoNueva);
-        historialNueva.setFechaHoraHasta(fechaHoraHasta);
-        
-        HistorialIntervencion historialConvocada = new HistorialIntervencion(fechaHora, estadoConvocada);
-        historialConvocada.setFechaHoraHasta(fechaHoraHasta);
-        
-        HistorialIntervencion historialEnCurso = new HistorialIntervencion(fechaHora, estadoEnCurso);
-        
-        historial.add(historialNueva);
-        historial.add(historialConvocada);
-        historial.add(historialEnCurso);
-        
-        Bombero encargado = new Bombero(true, "Carlos", "Perez");
-        Bombero encargado2 = new Bombero(true, "Pedro", "Gonzalez");
+        fechaHoraHasta = conversor.formatoDate(fechaHoraHasta);
+
+        //Creacion de historiales de estado EsNueva
+        HistorialIntervencion historialNueva1 = new HistorialIntervencion(fechaHora1, estadoNueva);
+        historialNueva1.setFechaHoraHasta(fechaHoraHasta);
+        HistorialIntervencion historialNueva2 = new HistorialIntervencion(fechaHora2, estadoNueva);
+        historialNueva2.setFechaHoraHasta(fechaHoraHasta);
+        HistorialIntervencion historialNueva3 = new HistorialIntervencion(fechaHora3, estadoNueva);
+        historialNueva3.setFechaHoraHasta(fechaHoraHasta);
+
+        //Creacion de historiales de estado Convocada
+        HistorialIntervencion historialConvocada1 = new HistorialIntervencion(fechaHora1, estadoConvocada);
+        historialConvocada1.setFechaHoraHasta(fechaHoraHasta);
+        HistorialIntervencion historialConvocada2 = new HistorialIntervencion(fechaHora2, estadoConvocada);
+        historialConvocada2.setFechaHoraHasta(fechaHoraHasta);
+        HistorialIntervencion historialConvocada3 = new HistorialIntervencion(fechaHora3, estadoConvocada);
+        historialConvocada3.setFechaHoraHasta(fechaHoraHasta);
+
+        //Creacion de historiales de estado EnCurso
+        HistorialIntervencion historialEnCurso1 = new HistorialIntervencion(fechaHora1, estadoEnCurso);
+        HistorialIntervencion historialEnCurso2 = new HistorialIntervencion(fechaHora2, estadoEnCurso);
+        HistorialIntervencion historialEnCurso3 = new HistorialIntervencion(fechaHora3, estadoEnCurso);
+
+        //Creacion de Array de historiales para las intervenciones
+        ArrayList<HistorialIntervencion> listHistorial1 = new ArrayList<>();
+        listHistorial1.add(historialNueva1);
+        listHistorial1.add(historialConvocada1);
+        listHistorial1.add(historialEnCurso1);
+
+        ArrayList<HistorialIntervencion> listHistorial2 = new ArrayList<>();
+        listHistorial2.add(historialNueva2);
+        listHistorial2.add(historialConvocada2);
+        listHistorial2.add(historialEnCurso2);
+
+        ArrayList<HistorialIntervencion> listHistorial3 = new ArrayList<>();
+        listHistorial3.add(historialNueva3);
+        listHistorial3.add(historialConvocada3);
+        listHistorial3.add(historialEnCurso3);
+
+        //Generacion UsuarioLogueado y Rol
+        Date fechaActual = new Date();
+        Usuario usuario1 = new Usuario("123456", fechaActual, "cperez");
+        usuarioActual = new Usuario("123456", fechaActual, "pgonzalez");
+        Rol rol = new Rol("Encargado de guardia");
+
+        //Generacion de bomberos
+        Bombero encargado = new Bombero(true, "Carlos", "Perez", usuario1, rol);
+        Bombero encargado2 = new Bombero(true, "Pedro", "Gonzalez",usuarioActual, rol );
+        encargados.add(encargado);
+        encargados.add(encargado2);
+        usuario1.setBombero(encargado);
+        usuarioActual.setBombero(encargado2);
         
         //Generacion de las unidades moviles
         UnidadMovil unidad1 = new UnidadMovil("001", true, 100, 0);
@@ -75,9 +117,9 @@ public class GeneradorBase {
         unidadesMoviles.add(unidad3);
         
         //Generacion de las dotaciones
-        Dotacion dot1 = new Dotacion(fechaHora, unidadesMoviles.get(0));
-        Dotacion dot2 = new Dotacion(fechaHora, unidadesMoviles.get(1));
-        Dotacion dot3 = new Dotacion(fechaHora, unidadesMoviles.get(2));
+        Dotacion dot1 = new Dotacion(fechaHora2, unidadesMoviles.get(0));
+        Dotacion dot2 = new Dotacion(fechaHora2, unidadesMoviles.get(1));
+        Dotacion dot3 = new Dotacion(fechaHora2, unidadesMoviles.get(2));
         
         dotaciones.add(dot1);
         dotaciones.add(dot2);
@@ -85,17 +127,17 @@ public class GeneradorBase {
         
         //Generacion de intervenciones
         Intervencion intervencion = new Intervencion("Colon 3008", "Incendio de Edificio", estadoEnCurso);
-        intervencion.setHistorial(historial);
+        intervencion.setHistorial(listHistorial1);
         intervencion.setEncargado(encargado);
         intervencion.setDotacion(dotaciones);
         
         Intervencion intervencion2 = new Intervencion("General Paz 3008", "Incendio de Edificio", estadoEnCurso);
-        intervencion2.setHistorial(historial);
+        intervencion2.setHistorial(listHistorial2);
         intervencion2.setEncargado(encargado2);
         intervencion2.setDotacion(dotaciones);
         
         Intervencion intervencion3 = new Intervencion("Tucuman 308", "Incendio de Edificio", estadoEnCurso);
-        intervencion3.setHistorial(historial);
+        intervencion3.setHistorial(listHistorial3);
         intervencion3.setEncargado(encargado);
         intervencion3.setDotacion(dotaciones);
         
@@ -121,6 +163,12 @@ public class GeneradorBase {
     public ArrayList<Intervencion> getIntervenciones() {
         return intervenciones;
     }
-    
-    
+
+    public ArrayList<Bombero> getEncargados() {
+        return encargados;
+    }
+
+    public Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
 }
