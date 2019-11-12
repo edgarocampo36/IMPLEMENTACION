@@ -5,6 +5,9 @@
  */
 package EstadoIntervencion;
 
+import EstadoIntervencion.HistorialIntervencion;
+import EstadoIntervencion.Estado;
+import EstadoIntervencion.Finalizada;
 import Intervencion.Dotacion;
 import Intervencion.Intervencion;
 import java.util.ArrayList;

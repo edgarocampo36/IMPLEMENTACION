@@ -5,6 +5,7 @@
  */
 package Intervencion;
 
+import Intervencion.UnidadMovil;
 import java.util.Date;
 
 /**

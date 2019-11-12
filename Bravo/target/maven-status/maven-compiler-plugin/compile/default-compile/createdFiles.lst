@@ -7,6 +7,7 @@ EstadoIntervencion\EnCurso.class
 EstadoIntervencion\Cancelada.class
 Intervencion\UnidadMovil.class
 Sesion\Bombero.class
+bravo\Ventana$1.class
 EstadoIntervencion\HistorialIntervencion.class
 Intervencion\Intervencion.class
 bravo\GeneradorBase.class

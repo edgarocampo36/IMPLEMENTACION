@@ -5,13 +5,19 @@
  */
 package bravo;
 
+
 import Interfaz.TablaIntervenciones;
 import Intervencion.Intervencion;
 import Sesion.Sesion;
 import Sesion.Usuario;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,16 +25,65 @@ import javax.swing.*;
  */
 public class Ventana extends JFrame{
     
+    ArrayList<Intervencion> listIntervenciones = new ArrayList<>();
+    JPanel panel;
+    JLabel titulo;
+    JButton finalizar;
+    
     public Ventana() {
 
-        super("Bravo - Finalizar Intervencion");
+        super("Bravo - Sistema de gestion para cuarteles de Bomberos");
         
         this.setSize(800, 600);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+        iniciarComponentes();
+        
+        //Se cargan las intervenciones en memoria
+        GeneradorBase generador = new GeneradorBase();
+        listIntervenciones = generador.getIntervenciones();
+        
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        
+        
+    }
+    
+    private void iniciarComponentes(){
+        panel = new JPanel();
+        panel.setBackground(Color.red);
+        this.getContentPane().add(panel);
+        
+        titulo = new JLabel("Gestiones disponibles");
+        titulo.setForeground(Color.YELLOW);
+        titulo.setFont(new Font("Arial", 0, 20));
+        panel.add(titulo);
+        
+        finalizar = new JButton("Finalizar Intervencion");
+        finalizar.setBounds(300, 200, 200, 30);
+        panel.add(finalizar);
+        finalizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                TablaIntervenciones t1 = new TablaIntervenciones();
+                DefaultTableModel modelo = t1.armarTableModel(listIntervenciones);
+                JTable tabla = new JTable(modelo);
+                tabla.setBounds(10, 30, 400, 700);
+                JScrollPane scroll = new JScrollPane(tabla);
+                scroll.setBounds(10, 30, 400, 700);
+                titulo.setText("Selecciones la Intervencion a Finalizar");
+                finalizar.setVisible(false);
+                panel.add(scroll);
+            }
+        });
+        
+        
     }
 
 //-- METODO MAIN
     public static void main(String[] ARGS) {
+        
+
+        Ventana ventana = new Ventana();
         
         String user = "bombero";
         String contrasenia = "123456";
@@ -36,13 +91,15 @@ public class Ventana extends JFrame{
         Usuario usuarioActual = new Usuario(contrasenia, fechaActual, user);
         Sesion sesionActual = new Sesion(fechaActual, usuarioActual);
         
-        //Se cargan las intervenciones en memoria
-        GeneradorBase generador = new GeneradorBase();
-        ArrayList<Intervencion> intervenciones = generador.getIntervenciones();
+
         
         GestorFinalizarIntervencion gestor = new GestorFinalizarIntervencion(sesionActual, usuarioActual);
         
-        //TablaIntervenciones t1 = new TablaIntervenciones(intervenciones);
+        
+        
+        
+        
+        
         
     }
     

@@ -5,6 +5,7 @@
  */
 package EstadoIntervencion;
 
+import EstadoIntervencion.Estado;
 import java.util.Date;
 
 /**

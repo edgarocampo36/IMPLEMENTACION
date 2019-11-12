@@ -5,6 +5,8 @@
  */
 package EstadoIntervencion;
 
+import EstadoIntervencion.Estado;
+
 /**
  *
  * @author Edgar

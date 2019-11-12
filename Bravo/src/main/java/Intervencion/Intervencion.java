@@ -5,6 +5,7 @@
  */
 package Intervencion;
 
+import Intervencion.Dotacion;
 import EstadoIntervencion.Estado;
 import EstadoIntervencion.HistorialIntervencion;
 import Sesion.Bombero;
