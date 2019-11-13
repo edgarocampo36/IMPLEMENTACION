@@ -8,14 +8,9 @@ package bravo;
 import Interfaz.TablaIntervenciones;
 import Intervencion.Intervencion;
 import Sesion.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.*;
@@ -73,8 +68,7 @@ public class Ventana extends JFrame{
             //metodo 19
             pedirSeleccionIntervencion(tabla);
             
-            //metodo 28
-            
+
         });
     }
 
@@ -124,7 +118,6 @@ public class Ventana extends JFrame{
                 int filaSeleccionada = tabla.getSelectedRow();
                 try {
                     if (filaSeleccionada != -1) {
-                        System.out.println("fila " + filaSeleccionada);
                         ArrayList<Intervencion> intervencionesEnCurso = gestor.getIntervencionesEnCursoOrdenadas();
                         Intervencion intervencionSeleccionada = intervencionesEnCurso.get(filaSeleccionada);
                         //metodo 20
@@ -151,24 +144,68 @@ public class Ventana extends JFrame{
 
     //metodo 28
     public void mostrarDatosObtenidosDotacion(String matrizDotacion[][]) {
-        
+
+
         panel1 = new JPanel();
         panel1.setBackground(Color.red);
         this.getContentPane().add(panel1);
         
         String nombreColumnas[] = {"Kilometraje al Salir", "Fecha y Hora de Salida", "Dominio de Unidad Movil"};
         JTable tablaDotaciones = new JTable(matrizDotacion, nombreColumnas);
-        tablaDotaciones.setBounds(10, 30, 400, 700);
+        tablaDotaciones.setBounds(10, 30, 100, 100);
         JScrollPane scroll2 = new JScrollPane(tablaDotaciones);
-        scroll2.setBounds(10, 30, 400, 700);
+        scroll2.setBounds(10, 30, 100, 100);
         titulo1.setText("Dotaciones de la Intervencion Seleccionada");
-        panel1.add(titulo1);
-        panel1.add(scroll2, BorderLayout.CENTER);
+        panel1.add(titulo1, BorderLayout.CENTER);
+        panel1.add(scroll2, BorderLayout.SOUTH);
+
+
+
+
+        //metodo 29
+        solicitarFechaHoraLLegadaYKilometraje(matrizDotacion);
+
     }
 
     //medoto 29
-    public void solicitarFechaHoraLLegadaYKilometraje() {
+    public void solicitarFechaHoraLLegadaYKilometraje(String matrizDotacion[][]) {
 
+        JLabel labelKm = new JLabel("Kilometraje al Volver");
+        JTextField textKm = new JTextField("Ingresar numeros");
+        JLabel labelFechaHora = new JLabel("Fecha y Hora de Regreso (formato 'hh:mm:ss dd/mm/aaaa')");
+        JTextField textFechaHora = new JTextField();
+        textFechaHora.setBounds(new Rectangle(25, 15, 250, 21));
+        panel1.add(labelKm, BorderLayout.AFTER_LAST_LINE);
+        panel1.add(textKm);
+        panel1.add(labelFechaHora, BorderLayout.AFTER_LAST_LINE);
+        panel1.add(textFechaHora);
+
+        ArrayList<String[]> arrayDatos = new ArrayList<>();
+        for (int i=0; i<matrizDotacion.length; i++){
+            String datos[] = new String[2];
+            String km = JOptionPane.showInputDialog("Ingrese kilometraje al llegar para Dotacion ");
+            String fechaHora = JOptionPane.showInputDialog("Ingrese hora y fecha (formato 'hh:mm:ss dd/mm/aaaa') al llegar para Dotacion ");
+            datos[0] = km;
+            datos[1] = fechaHora;
+            arrayDatos.add(datos);
+        }
+        System.out.println("datos "+arrayDatos.size());
+
+        //showMessageDialog(null, "Ingrese kilometraje, fecha y hora de cada dotacion");
+
+
+
+    }
+
+    private void validarNumero(java.awt.event.KeyEvent ke){
+        char validar =  ke.getKeyChar();
+
+        if(Character.isLetter(validar)){
+            getToolkit().beep();
+            ke.consume();
+
+            JOptionPane.showMessageDialog(rootPane, "Ingresar solo numeros");
+        }
     }
 
     //metodo 30
