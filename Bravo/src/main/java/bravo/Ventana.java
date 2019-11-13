@@ -73,6 +73,8 @@ public class Ventana extends JFrame{
             //metodo 19
             pedirSeleccionIntervencion(tabla);
             
+            //metodo 28
+            
         });
     }
 
@@ -86,29 +88,28 @@ public class Ventana extends JFrame{
         ArrayList<Intervencion> intervencionesEnCurso = gestor.opcionFinalizarIntervencion(sesionActual, usuarioActual);
         
         //metodo 18
+        panel1.setVisible(false);
         return mostrarIntervencionesEnCurso(intervencionesEnCurso);
     }
 
     //metodo18
     public JTable mostrarIntervencionesEnCurso(ArrayList<Intervencion> intervencionesEnCurso) {
-
-        finalizar.setVisible(false);
+        
+        panel1 = new JPanel();
+        panel1.setBackground(Color.red);
+        this.getContentPane().add(panel1);
+        
         titulo1.setText("Intervenciones En Curso");
+        panel1.add(titulo1);
         TablaIntervenciones t1 = new TablaIntervenciones();
-        System.out.println(intervencionesEnCurso.size());
         DefaultTableModel modelo = t1.armarTableModel(intervencionesEnCurso);
         JTable tabla = new JTable(modelo);
         tabla.setBounds(10, 30, 400, 700);
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setBounds(10, 30, 400, 700);
-        panel1.add(scroll, BorderLayout.CENTER);
-       
-        /*titulo2 = new JLabel("Intervenciones En Curso");
-        titulo2.setForeground(Color.YELLOW);
-        titulo2.setFont(new Font("Arial", 0, 20));
-        panel1.add(titulo2, BorderLayout.WEST);*/
+        panel1.add(scroll);
         seleccionar = new JButton("Seleccionar Intervencion");
-        panel1.add(seleccionar, BorderLayout.SOUTH);
+        panel1.add(seleccionar);
 
         return tabla;
     }
@@ -127,7 +128,12 @@ public class Ventana extends JFrame{
                         ArrayList<Intervencion> intervencionesEnCurso = gestor.getIntervencionesEnCursoOrdenadas();
                         Intervencion intervencionSeleccionada = intervencionesEnCurso.get(filaSeleccionada);
                         //metodo 20
-                        
+                        String[][] matrizDotaciones = tomarSeleccionIntervencion(intervencionSeleccionada);
+                        //metodo 28
+                        tabla.setVisible(false);
+                        seleccionar.setVisible(false);
+                        panel1.setVisible(false);
+                        mostrarDatosObtenidosDotacion(matrizDotaciones);
                     } else {
                         JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna intervencion");
                     }
@@ -139,22 +145,25 @@ public class Ventana extends JFrame{
     }
     
     //metodo 20
-    public void tomarSeleccionIntervencion(Intervencion intervencionSeleccionada){
-        gestor.tomarSeleccionIntervencion(intervencionSeleccionada);
+    public String[][] tomarSeleccionIntervencion(Intervencion intervencionSeleccionada){
+        return gestor.tomarSeleccionIntervencion(intervencionSeleccionada);
     }
 
     //metodo 28
     public void mostrarDatosObtenidosDotacion(String matrizDotacion[][]) {
-        int i = 0;
-        int j = 0;
-        while (matrizDotacion[i][j] != null) {
-            System.out.println("Dotacion " + (i + 1) + ":");
-            while (matrizDotacion[i][j] != null) {
-                System.out.println(matrizDotacion[i][j]);
-                j++;
-            }
-            i++;
-        }
+        
+        panel1 = new JPanel();
+        panel1.setBackground(Color.red);
+        this.getContentPane().add(panel1);
+        
+        String nombreColumnas[] = {"Kilometraje al Salir", "Fecha y Hora de Salida", "Dominio de Unidad Movil"};
+        JTable tablaDotaciones = new JTable(matrizDotacion, nombreColumnas);
+        tablaDotaciones.setBounds(10, 30, 400, 700);
+        JScrollPane scroll2 = new JScrollPane(tablaDotaciones);
+        scroll2.setBounds(10, 30, 400, 700);
+        titulo1.setText("Dotaciones de la Intervencion Seleccionada");
+        panel1.add(titulo1);
+        panel1.add(scroll2, BorderLayout.CENTER);
     }
 
     //medoto 29

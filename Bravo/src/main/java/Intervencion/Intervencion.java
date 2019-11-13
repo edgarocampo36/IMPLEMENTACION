@@ -113,9 +113,12 @@ public class Intervencion {
         String matrizDotacion[][] = new String[n][3];
         int i = 0;
         for (Dotacion dot : dotacion){
+            //metodo 24
             matrizDotacion[i][0] = Float.toString(dot.getKmUnidadAlSalir());
+            //metodo 25
             String fechaHoraSalida = dot.getFechaHoraSalida().toString();
             matrizDotacion[i][1] = fechaHoraSalida;
+            //metodo 26
             matrizDotacion[i][2] = dot.conocerUnidadMovil();
             i++;
         }
