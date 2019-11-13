@@ -15,29 +15,44 @@ import java.util.Date;
 
 public class GestorFinalizarIntervencion {
     
+    private Ventana ventana;
     private Sesion sesionActual;
     private Usuario usuarioLogueado;
+    private ArrayList<Intervencion> listaIntervenciones;
+    private ArrayList<Intervencion> intervencionesEnCursoOrdenadas;
     private Intervencion intervencionSeleccionada;
     private Date fechaHoraLlegada[];
     private float kilometrajeLlegada[];
+    
 
-    public GestorFinalizarIntervencion(Sesion sesionActual, Usuario usuarioLogueado) {
+    public GestorFinalizarIntervencion(Sesion sesionActual, Usuario usuarioLogueado, ArrayList<Intervencion> listIntervenciones) {
         this.sesionActual = sesionActual;
         this.usuarioLogueado = usuarioLogueado;
+        this.listaIntervenciones = listIntervenciones;
+    }
+
+    public void setVentana(Ventana ventana) {
+        this.ventana = ventana;
+    }
+
+    public ArrayList<Intervencion> getIntervencionesEnCursoOrdenadas() {
+        return intervencionesEnCursoOrdenadas;
     }
     
+    
+    
     //metodo 3
-    public ArrayList<Intervencion> opcionFinalizarIntervencion(Sesion sesion, Usuario usuario, ArrayList<Intervencion> intervenciones){
+    public ArrayList<Intervencion> opcionFinalizarIntervencion(Sesion sesion, Usuario usuario){
         //metodo 4
         if(validarUsuarioLogueado(sesion, usuario)){
             //metodo 9
-            ArrayList<Intervencion> intervencionesEnCurso = buscarIntervencionesEnCurso(intervenciones);
+            ArrayList<Intervencion> intervencionesEnCurso = buscarIntervencionesEnCurso(listaIntervenciones);
 
             //metodo 17
-            ArrayList<Intervencion> intervencionesOrdenadas = ordenarIntervencionesXFecha(intervencionesEnCurso);
-            return intervencionesOrdenadas;
+            intervencionesEnCursoOrdenadas = ordenarIntervencionesXFecha(intervencionesEnCurso);
+            return intervencionesEnCursoOrdenadas;
         }
-        return  null;
+        return null;
     }
     
     //metodo 4
