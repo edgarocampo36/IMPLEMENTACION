@@ -7,6 +7,8 @@ package bravo;
 
 import Interfaz.TablaIntervenciones;
 import Intervencion.Intervencion;
+import Sesion.Sesion;
+import Sesion.Usuario;
 import static bravo.VistaPrincipal.contenedor;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
@@ -23,18 +25,18 @@ public class PanelIntervenciones extends javax.swing.JPanel {
 
     GestorFinalizarIntervencion gestor;
     ArrayList<Intervencion> intervencionesEnCurso;
+    Usuario usuarioActual;
+    Sesion sesionActual;
 
-    public PanelIntervenciones(ArrayList<Intervencion> intervencionesEnCurso, GestorFinalizarIntervencion gestor) {
+    public PanelIntervenciones(ArrayList<Intervencion> intervencionesEnCurso, GestorFinalizarIntervencion gestor, Usuario usuario, Sesion sesion) {
         this.intervencionesEnCurso = intervencionesEnCurso;
         this.gestor = gestor;
-        
+        this.usuarioActual = usuario;
+        this.sesionActual = sesion;
+
         initComponents();
-        //metodo 18
+        //metodo 18 y 19
         mostrarIntervencionesEnCurso(intervencionesEnCurso);
-
-        //metodo 19
-        JOptionPane.showMessageDialog(null, "Seleccione la intervencion que desea finalizar");
-
     }
 
     /**
@@ -47,30 +49,43 @@ public class PanelIntervenciones extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnSeleccionar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         scroll = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
-        jButton1.setText("Seleccionar Intervencion");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        setBackground(new java.awt.Color(255, 153, 0));
+        setMinimumSize(new java.awt.Dimension(800, 500));
+        setPreferredSize(new java.awt.Dimension(800, 500));
+
+        jPanel2.setBackground(new java.awt.Color(255, 153, 0));
+        jPanel2.setMinimumSize(new java.awt.Dimension(800, 500));
+        jPanel2.setPreferredSize(new java.awt.Dimension(800, 33));
+
+        btnSeleccionar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnSeleccionar.setText("Seleccionar Intervencion");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 seleccionarIntervencion(evt);
             }
         });
-        jPanel2.add(jButton1);
+        jPanel2.add(btnSeleccionar);
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton2);
+        jPanel2.add(btnCancelar);
 
-        jLabel1.setText("Intervenciones En Curso");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("Panel de Intervenciones en Curso");
 
+        tabla.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -79,32 +94,42 @@ public class PanelIntervenciones extends javax.swing.JPanel {
 
             }
         ));
+        tabla.getTableHeader().setReorderingAllowed(false);
         scroll.setViewportView(tabla);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Seleccione la intervencion en curso que desea finalizar, luego presione Seleccionar Intervencion");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(199, 199, 199))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(jLabel1)))
-                .addGap(0, 14, Short.MAX_VALUE))
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(scroll)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(32, 32, 32)
-                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(80, 80, 80)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -113,18 +138,18 @@ public class PanelIntervenciones extends javax.swing.JPanel {
         int filaSeleccionada = tabla.getSelectedRow();
         try {
             if (filaSeleccionada != -1) {
-                
+
                 Intervencion intervencionSeleccionada = intervencionesEnCurso.get(filaSeleccionada);
-                
+
                 //metodo 20
                 String[][] matrizDotaciones = tomarSeleccionIntervencion(intervencionSeleccionada);
-                
+
                 //metodo 28
-                PanelDotaciones panelDotaciones = new PanelDotaciones(matrizDotaciones, gestor);
+                PanelDotaciones panelDotaciones = new PanelDotaciones(matrizDotaciones, gestor, usuarioActual, sesionActual);
 
                 this.setVisible(false);
                 contenedor.add(panelDotaciones);
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna intervencion");
             }
@@ -134,18 +159,16 @@ public class PanelIntervenciones extends javax.swing.JPanel {
 
     }//GEN-LAST:event_seleccionarIntervencion
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //PanelPrincipal panelPrincipal = new PanelPrincipal();
-
-        //this.setVisible(false);
-        //contenedor.add(panelPrincipal);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        cargarPanelPrincipal();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnSeleccionar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane scroll;
     private javax.swing.JTable tabla;
@@ -153,17 +176,21 @@ public class PanelIntervenciones extends javax.swing.JPanel {
 
     //metodo18
     public void mostrarIntervencionesEnCurso(ArrayList<Intervencion> intervencionesEnCurso) {
-
-        System.out.println("panel " + intervencionesEnCurso.size());
         TablaIntervenciones t1 = new TablaIntervenciones();
         DefaultTableModel modelo = t1.armarTableModel(intervencionesEnCurso);
-        System.out.println(modelo.toString());
         tabla.setModel(modelo);
+
     }
 
     //metodo 20
     public String[][] tomarSeleccionIntervencion(Intervencion intervencionSeleccionada) {
         String[][] matriz = gestor.tomarSeleccionIntervencion(intervencionSeleccionada);
         return matriz;
+    }
+
+    public void cargarPanelPrincipal() {
+        PanelPrincipal panelPrincipal = new PanelPrincipal(usuarioActual, sesionActual, gestor);
+        this.setVisible(false);
+        contenedor.add(panelPrincipal);
     }
 }

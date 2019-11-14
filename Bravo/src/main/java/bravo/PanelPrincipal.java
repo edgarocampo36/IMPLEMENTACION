@@ -12,13 +12,14 @@ import static bravo.VistaPrincipal.contenedor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Edgar
  */
 public class PanelPrincipal extends javax.swing.JPanel {
-    
+
     Usuario usuario;
     Sesion sesion;
     GestorFinalizarIntervencion gestor;
@@ -27,10 +28,8 @@ public class PanelPrincipal extends javax.swing.JPanel {
         this.usuario = usuario;
         this.sesion = sesion;
         this.gestor = gestor;
-        
+
         initComponents();
-        
-        
 
     }
 
@@ -43,11 +42,20 @@ public class PanelPrincipal extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnFinalizar = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
+        btnFinalizar = new javax.swing.JButton();
+        btnIniciar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
-        setMinimumSize(new java.awt.Dimension(500, 500));
+        setBackground(new java.awt.Color(255, 153, 0));
+        setMinimumSize(new java.awt.Dimension(800, 500));
+        setPreferredSize(new java.awt.Dimension(800, 500));
 
+        lblTitulo.setFont(new java.awt.Font("Simplified Arabic", 1, 36)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("Bienvenido a Sistema de Gestion Bravo");
+
+        btnFinalizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnFinalizar.setText("Finalizar Intervencion");
         btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,60 +63,74 @@ public class PanelPrincipal extends javax.swing.JPanel {
             }
         });
 
-        lblTitulo.setText("Bienvenido a Sistema de Gestion Bravo");
+        btnIniciar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnIniciar.setText("Iniciar Intervencion");
+        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Que gestion desea realizar?");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(92, Short.MAX_VALUE)
+                .addComponent(lblTitulo)
+                .addGap(84, 84, 84))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(lblTitulo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(176, 176, 176)
-                        .addComponent(btnFinalizar)))
-                .addGap(164, 164, 164))
+                .addGap(288, 288, 288)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnFinalizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnIniciar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap()
                 .addComponent(lblTitulo)
-                .addGap(112, 112, 112)
-                .addComponent(btnFinalizar)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(53, 53, 53)
+                .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(89, 89, 89))
         );
     }// </editor-fold>//GEN-END:initComponents
-    
+
     //metodo 2
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         //metodo 3
         ArrayList<Intervencion> intervencionesEnCurso = gestor.opcionFinalizarIntervencion(sesion, usuario);
-        System.out.println("tamaño "+intervencionesEnCurso.size());
+
         //metodo 18
-
-        PanelIntervenciones panelIntervenciones = new PanelIntervenciones(intervencionesEnCurso, gestor);
-
-        this.setVisible(false);
-        contenedor.add(panelIntervenciones);
+        if (intervencionesEnCurso.size() > 0) {
+            PanelIntervenciones panelIntervenciones = new PanelIntervenciones(intervencionesEnCurso, gestor, usuario, sesion);
+            this.setVisible(false);
+            contenedor.add(panelIntervenciones);
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay intervenciones en curso");
+        }
     }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+        JOptionPane.showMessageDialog(null, "Funcionalidad no disponible aun");
+    }//GEN-LAST:event_btnIniciarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFinalizar;
+    private javax.swing.JButton btnIniciar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 
-    /*@Override
-    public void actionPerformed(ActionEvent arg0) {
-        PanelIntervenciones panelIntervenciones = new PanelIntervenciones();
-        Object evt = arg0.getSource();
-        
-        if(evt.equals(btnFinalizar)){
-            this.setVisible(false);
-            contenedor.add(panelIntervenciones);
-        }
-    }*/
 }

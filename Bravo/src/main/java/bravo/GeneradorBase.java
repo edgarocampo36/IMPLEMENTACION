@@ -123,13 +123,13 @@ public class GeneradorBase {
         
         dotaciones.add(dot1);
         dotaciones.add(dot2);
-        dotaciones.add(dot3);
+        //dotaciones.add(dot3);
         
         //Generacion de intervenciones
-        Intervencion intervencion = new Intervencion("Colon 3008", "Incendio de Edificio", estadoEnCurso);
-        intervencion.setHistorial(listHistorial1);
-        intervencion.setEncargado(encargado);
-        intervencion.setDotacion(dotaciones);
+        Intervencion intervencion1 = new Intervencion("Colon 3008", "Incendio de Edificio", estadoEnCurso);
+        intervencion1.setHistorial(listHistorial1);
+        intervencion1.setEncargado(encargado);
+        intervencion1.setDotacion(dotaciones);
         
         Intervencion intervencion2 = new Intervencion("General Paz 3008", "Incendio de Edificio", estadoEnCurso);
         intervencion2.setHistorial(listHistorial2);
@@ -148,7 +148,7 @@ public class GeneradorBase {
         Intervencion intervencion8 = new Intervencion("Belgrano 400", "Incendio de Edificio", new Cancelada());
         Intervencion intervencion9 = new Intervencion("Colon 302", "Incendio de Edificio", new Convocada());
         Intervencion intervencion10 = new Intervencion("Santa Fe 808", "Incendio de Edificio", new Nueva());
-        intervenciones.add(intervencion);
+        intervenciones.add(intervencion1);
         intervenciones.add(intervencion2);
         intervenciones.add(intervencion3);
         intervenciones.add(intervencion4);

@@ -56,7 +56,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(800, 500));
+        setResizable(false);
 
+        contenedor.setBackground(new java.awt.Color(255, 255, 255));
         contenedor.setLayout(new java.awt.BorderLayout());
         getContentPane().add(contenedor, java.awt.BorderLayout.CENTER);
 
