@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class GestorFinalizarIntervencion {
     
-    private Ventana ventana;
+    private VistaPrincipal ventana;
     private Sesion sesionActual;
     private Usuario usuarioLogueado;
     private ArrayList<Intervencion> listaIntervenciones;
@@ -31,7 +31,7 @@ public class GestorFinalizarIntervencion {
         this.listaIntervenciones = listIntervenciones;
     }
 
-    public void setVentana(Ventana ventana) {
+    public void setVentana(VistaPrincipal ventana) {
         this.ventana = ventana;
     }
 

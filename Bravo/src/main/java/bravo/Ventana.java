@@ -144,11 +144,6 @@ public class Ventana extends JFrame{
 
     //metodo 28
     public void mostrarDatosObtenidosDotacion(String matrizDotacion[][]) {
-
-
-        panel1 = new JPanel();
-        panel1.setBackground(Color.red);
-        this.getContentPane().add(panel1);
         
         String nombreColumnas[] = {"Kilometraje al Salir", "Fecha y Hora de Salida", "Dominio de Unidad Movil"};
         JTable tablaDotaciones = new JTable(matrizDotacion, nombreColumnas);
@@ -239,9 +234,9 @@ public class Ventana extends JFrame{
         GestorFinalizarIntervencion gestor = new GestorFinalizarIntervencion(sesionActual, usuarioActual, listIntervenciones);
 
         //metodo 2
-        Ventana ventana = new Ventana(usuarioActual, sesionActual, gestor);
+        //Ventana ventana = new Ventana(usuarioActual, sesionActual, gestor);
 
-        gestor.setVentana(ventana);
+        //gestor.setVentana(ventana);
 
     }
     
