@@ -12,9 +12,8 @@ import Sesion.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class GestorFinalizarIntervencion {
-    
+
     private VistaPrincipal ventana;
     private Sesion sesionActual;
     private Usuario usuarioLogueado;
@@ -23,7 +22,6 @@ public class GestorFinalizarIntervencion {
     private Intervencion intervencionSeleccionada;
     private Date fechaHoraLlegada[];
     private float kilometrajeLlegada[];
-    
 
     public GestorFinalizarIntervencion(Sesion sesionActual, Usuario usuarioLogueado, ArrayList<Intervencion> listIntervenciones) {
         this.sesionActual = sesionActual;
@@ -38,13 +36,11 @@ public class GestorFinalizarIntervencion {
     public ArrayList<Intervencion> getIntervencionesEnCursoOrdenadas() {
         return intervencionesEnCursoOrdenadas;
     }
-    
-    
-    
+
     //metodo 3
-    public ArrayList<Intervencion> opcionFinalizarIntervencion(Sesion sesion, Usuario usuario){
+    public ArrayList<Intervencion> opcionFinalizarIntervencion(Sesion sesion, Usuario usuario) {
         //metodo 4
-        if(validarUsuarioLogueado(sesion, usuario)){
+        if (validarUsuarioLogueado(sesion, usuario)) {
             //metodo 9
             ArrayList<Intervencion> intervencionesEnCurso = buscarIntervencionesEnCurso(listaIntervenciones);
 
@@ -54,31 +50,31 @@ public class GestorFinalizarIntervencion {
         }
         return null;
     }
-    
+
     //metodo 4
-    public boolean validarUsuarioLogueado(Sesion sesion, Usuario usuario){
+    public boolean validarUsuarioLogueado(Sesion sesion, Usuario usuario) {
         return sesion.getUsuarioLogueado(usuario);
     }
-    
+
     //metodo 9
-    public ArrayList<Intervencion> buscarIntervencionesEnCurso(ArrayList<Intervencion> intervenciones){
+    public ArrayList<Intervencion> buscarIntervencionesEnCurso(ArrayList<Intervencion> intervenciones) {
         ArrayList<Intervencion> intervencionesEnCurso = new ArrayList<>();
-        for (Intervencion i : intervenciones){
+        for (Intervencion i : intervenciones) {
             //metodo 10
-            if(i.estaEnCurso()){
+            if (i.estaEnCurso()) {
                 intervencionesEnCurso.add(i);
-            } 
+            }
         }
         return intervencionesEnCurso;
     }
-    
+
     //metodo 17
-    public ArrayList<Intervencion> ordenarIntervencionesXFecha(ArrayList<Intervencion> intervenciones){
-        for (int i = 0; i<intervenciones.size()-1; i++){
+    public ArrayList<Intervencion> ordenarIntervencionesXFecha(ArrayList<Intervencion> intervenciones) {
+        for (int i = 0; i < intervenciones.size() - 1; i++) {
             Intervencion in1 = intervenciones.get(i);
-            for(int j = 1; j<intervenciones.size(); j++){
+            for (int j = 1; j < intervenciones.size(); j++) {
                 Intervencion in2 = intervenciones.get(j);
-                if(in1.getFechaHoraSolicitud().compareTo(in2.getFechaHoraSolicitud()) > 0){ //si in1 es mayor que in2 se ordenan
+                if (in1.getFechaHoraSolicitud().compareTo(in2.getFechaHoraSolicitud()) > 0) { //si in1 es mayor que in2 se ordenan
                     intervenciones.set(i, in2);
                     intervenciones.set(j, in1);
                     in1 = in2;
@@ -87,64 +83,64 @@ public class GestorFinalizarIntervencion {
         }
         return intervenciones;
     }
-    
+
     //metodo 21
-    public String[][] tomarSeleccionIntervencion(Intervencion intervencion){
+    public String[][] tomarSeleccionIntervencion(Intervencion intervencion) {
         intervencionSeleccionada = intervencion;
         return buscarDotacionesAsociadasAIntervencion(intervencionSeleccionada);
     }
-    
+
     //metodo 22
-    public String[][] buscarDotacionesAsociadasAIntervencion(Intervencion intervencion){
-        return intervencion.conocerDotacion();
+    public String[][] buscarDotacionesAsociadasAIntervencion(Intervencion intervencion) {
+        String matriz[][] = intervencion.conocerDotacion();
+        fechaHoraLlegada = new Date[matriz.length];
+        kilometrajeLlegada = new float[matriz.length];
+        return matriz;
     }
-    
+
     //metodo 31
-    public boolean tomarFechaHoraLlegadaYKilometraje(String fechaHora[], String kilometraje[]){
-        int n = intervencionSeleccionada.getDotacion().size();
-        fechaHoraLlegada = new Date[n];
-        kilometrajeLlegada = new float[n];
+    public boolean tomarFechaHoraLlegadaYKilometraje(String horaFecha, String kilometraje, int indexDotacion) {
+        ArrayList<Dotacion> dotaciones = intervencionSeleccionada.getDotacion();
+        Dotacion dot = dotaciones.get(indexDotacion);
         ConversorFecha conversor = new ConversorFecha();
-        for (int i=0; i<n; i++){
-            fechaHoraLlegada[i] = conversor.stringADate(fechaHora[i]);
-            kilometrajeLlegada[i] = Float.valueOf(kilometraje[i]);
-            ArrayList<Dotacion> dotaciones = intervencionSeleccionada.getDotacion();
-            Dotacion dot = dotaciones.get(i);
-            if(validarKilometrajeUnidad(dot, kilometrajeLlegada[i])){ //completar si ingresa mal datos
-                if(validarFechaHoraLlegada(dot, fechaHoraLlegada[i])){
-                }
-            }
+        Date horaFechaDate = conversor.stringADate(horaFecha);
+        float km = Float.valueOf(kilometraje);
+        if ((validarKilometrajeUnidad(dot, km)&&validarFechaHoraLlegada(dot, horaFechaDate))) {
+            fechaHoraLlegada[indexDotacion] = horaFechaDate;
+            kilometrajeLlegada[indexDotacion] = km;
+            return true;
         }
-        return true;
+        return false;
     }
-    
-    
-    
+
     //metodo 32
-    public boolean validarKilometrajeUnidad(Dotacion dotacion, float kilometraje){
-         return dotacion.validarKilometrajeUnidad(kilometraje);
+    public boolean validarKilometrajeUnidad(Dotacion dotacion, float kilometraje) {
+        return dotacion.validarKilometrajeUnidad(kilometraje);
     }
-    
+
     //metodo 33
-    public boolean validarFechaHoraLlegada(Dotacion dotacion, Date fechaHora){
+    public boolean validarFechaHoraLlegada(Dotacion dotacion, Date fechaHora) {
+        if(dotacion.validarFechaHoraLlegada(fechaHora)){
+            
+        }
         return dotacion.validarFechaHoraLlegada(fechaHora);
     }
-    
+
     //metodo 36
-    public void confirmarFinalizacion(){
+    public void confirmarFinalizacion() {
         Date fechaHoraActual = this.getFechaHoraActual();
         this.actualizarEstadoIntervencion(fechaHoraActual);
     }
-    
+
     //metodo 37
-    public Date getFechaHoraActual(){
+    public Date getFechaHoraActual() {
         Date fechaActual = new Date(); //obtiene la fecha actual
         ConversorFecha conversor = new ConversorFecha();
         return conversor.formatoDate(fechaActual);
     }
-    
+
     //metodo 39
-    public void actualizarEstadoIntervencion(Date fechaHoraActual){
+    public void actualizarEstadoIntervencion(Date fechaHoraActual) {
         intervencionSeleccionada.finalizar(fechaHoraActual, fechaHoraLlegada, kilometrajeLlegada);
     }
 }

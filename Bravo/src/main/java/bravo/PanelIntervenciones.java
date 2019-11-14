@@ -120,7 +120,7 @@ public class PanelIntervenciones extends javax.swing.JPanel {
                 String[][] matrizDotaciones = tomarSeleccionIntervencion(intervencionSeleccionada);
                 
                 //metodo 28
-                PanelDotaciones panelDotaciones = new PanelDotaciones(matrizDotaciones);
+                PanelDotaciones panelDotaciones = new PanelDotaciones(matrizDotaciones, gestor);
 
                 this.setVisible(false);
                 contenedor.add(panelDotaciones);
